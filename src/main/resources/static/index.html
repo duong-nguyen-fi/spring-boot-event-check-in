@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>QR Code</title>
+</head>
+<body>
+<div>
+    <input id="input" type="text">
+    <button id="btn" onclick="generate()">Generate QR Code</button>
+</div>
+<div>
+    <img id ="img" src=""/>
+</div>
+
+<br>
+<br>
+
+    <script>
+        function generate() {
+
+            var content = document.getElementById("input").value;
+
+            var oReq = new XMLHttpRequest();
+            oReq.open("POST", "/create", true);
+            oReq.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            oReq.responseType = "arraybuffer";
+            oReq.onload = function (oEvent) {
+                var arrayBuffer = oReq.response; // Note: not oReq.responseText
+                console.log(arrayBuffer);
+                var blob = new Blob([arrayBuffer], {type: "image/png"});
+
+                document.getElementById("img").src = URL.createObjectURL(blob);;
+            }
+            oReq.send('content='+content);
+        }
+
+
+
+
+
+
+       /* $(document).ready(function(){
+                $.post("/create",
+                    {
+                        content: "From Andy"
+                    },
+                    function(data,status){
+                        alert("Data: " + data + "\nStatus: " + status);
+                        var blob = new Blob([data], {type: "image/png"});
+
+                        document.getElementById("img").src = URL.createObjectURL(blob);;
+                    });
+            });*/
+
+    </script>
+</body>
+</html>
