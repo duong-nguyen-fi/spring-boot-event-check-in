@@ -3,3 +3,9 @@ jdk:
  - oraclejdk8
 before_install:
   - chmod +x mvnw
+deploy:
+  provider: heroku
+  api-key:
+    secure: $HEROKU_API_KEY
+  app: event-checkin
+
